@@ -245,14 +245,7 @@ Além disso existe uma chave `geocode_cache` para guardar resultados de reverse-
 ## Contribuindo
 Pull requests são bem-vindos para melhorar UX, performance e arquitetura (mover para backend, melhorar armazenamento). Abra issues para bugs e solicitações de features.
 
-## Licença
-Adicione sua licença preferida (ex.: MIT) se desejar tornar o projeto público.
-
----
-Se quiser, eu posso também:
-- Gerar um README em inglês;
-- Adicionar um `LICENSE` (MIT) automaticamente;
-- Criar um pequeno script `serve.bat` para abrir o servidor local no Windows (cmd) com um clique.
 
 
-Quer que eu adicione mais alguma seção ou gere o `serve.bat`?
+
+
