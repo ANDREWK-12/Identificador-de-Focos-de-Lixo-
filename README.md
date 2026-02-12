@@ -1,3 +1,115 @@
+## Identificador de Lixo (YOLOv8)
+
+Projeto para detecção de lixo usando Ultralytics YOLOv8. Este repositório contém scripts para treinar, inferir e exportar o modelo (ONNX), além da configuração do dataset (`data.yaml`).
+
+### Conteúdo principal
+
+- `train.py` - Script para treinar o modelo YOLOv8 (usa `ultralytics.YOLO`).
+- `test_lixo.py` - Script para executar inferência em imagem/vídeo com o modelo treinado.
+- `export.py` - Script simples para exportar o `best.pt` para ONNX.
+- `data.yaml` - Configuração do dataset (caminhos, classes, nc, etc.).
+- `yolov8n.pt` - Checkpoint base (modelo pré-treinado) usado como `MODEL_BASE`.
+- `runs/` - Pasta onde o Ultralytics salva os resultados de treino e inferência.
+
+## Visão geral
+
+O fluxo típico é:
+
+1. Preparar o dataset no formato YOLO (pastas `train/images`, `train/labels`, `valid/images`, `valid/labels`, `test/images`).
+2. Ajustar `data.yaml` com o caminho absoluto do projeto e classes.
+3. Treinar usando `train.py`.
+4. Rodar inferência com `test_lixo.py` apontando para o `best.pt` gerado.
+5. Opcional: exportar para ONNX com `export.py`.
+
+## Pré-requisitos
+
+- Python 3.8+ (recomendado 3.8 — 3.11)
+- pip
+- Dependências Python (instalar com pip):
+
+```bash
+python -m venv .venv
+.\.venv\Scripts\activate
+pip install -U pip
+pip install ultralytics opencv-python numpy pillow
+# Para usar GPU, instale o PyTorch com suporte CUDA adequado ao seu driver/hardware
+# (veja https://pytorch.org/get-started/locally/ para o comando correto).
+```
+
+Observação: o pacote `ultralytics` gerencia internamente o infer e treino com o framework YOLOv8.
+
+## Configuração do dataset
+
+Verifique `data.yaml` (já presente no repositório). Pontos importantes:
+
+- `path`: caminho absoluto até a raiz do dataset (no projeto atual está: `E:\Aulas\projetos\Lixo.v3i.yolov8`).
+- `train`, `val`, `test`: caminhos relativos a `path` para imagens de treino/val/test.
+- `nc`: número de classes (no arquivo atual: 2).
+- `names`: lista com os nomes das classes.
+
+As labels devem estar no formato YOLO (x_center y_center width height, normalizados) em arquivos `.txt` com mesmo nome das imagens.
+
+## Treinamento
+
+Por padrão, `train.py` usa:
+
+- `MODEL_BASE = 'yolov8n.pt'`
+- `EPOCHS = 50`
+- `BATCH_SIZE = 4`
+- `device='cpu'` (altere para `'cuda'` se tiver GPU configurada)
+
+Para treinar com as configurações atuais, ative o venv e rode (no cmd do Windows):
+
+```bash
+python train.py
+```
+
+Se quiser usar GPU, edite `train.py` e altere `device='cpu'` para `device='cuda'` (ou passe o índice, ex: `'cuda:0'`) e garanta que o PyTorch com CUDA esteja instalado.
+
+Os resultados do treino serão salvos em `runs/detect/identificador_lixo_cpu/` (nome definido em `train.py`). O melhor peso fica em `weights/best.pt` dentro dessa pasta.
+
+## Inferência (teste)
+
+O script `test_lixo.py` realiza a inferência usando o arquivo de pesos (`best.pt`).
+
+Antes de rodar, edite `test_lixo.py` se necessário para apontar para o modelo treinado e para a fonte de teste:
+
+- `MODELO_TREINADO` — caminho para `best.pt` (padrão: `runs/detect/identificador_lixo_cpu/weights/best.pt`).
+- `FONTE_DE_TESTE` — caminho para imagem ou vídeo (ex: `test_imagens/minha_foto.jpg` ou vídeo `.mp4`).
+- `CONFIANCA_MINIMA` — limiar de confiança (0.0 a 1.0).
+- `DEVICE` — `'cpu'` ou `'cuda'`.
+
+Executar (no cmd):
+
+```bash
+python test_lixo.py
+```
+
+Saída: imagens/vídeos com boxes serão salvos em `runs/predict/lixo_detectado/` (ou subpastas geradas pelo Ultralytics).
+
+## Exportar para ONNX
+
+Para exportar o `best.pt` para ONNX, use o `export.py`. Garanta que a variável no script aponte para o `best.pt` correto.
+
+```bash
+python export.py
+```
+
+O ONNX gerado será salvo no mesmo diretório (o `ultralytics` coloca o arquivo exportado na pasta padrão do modelo).
+
+## Dicas e troubleshooting
+
+- Verifique caminhos absolutos no `data.yaml`. Erros comuns no treino são paths incorretos.
+- Se o treinamento estiver muito lento no CPU, considere treinar em GPU ou usar menos epochs/batch size menores.
+- Para problemas com dependências (ex: PyTorch/CUDA), siga as instruções oficiais do PyTorch para combinar versão CUDA e drivers.
+- Se o `best.pt` não existir após o treino, verifique os logs em `runs/detect/<nome>/train.log` ou na saída do script para entender se houve erro.
+
+
+
+
+
+
+
 # EcoMonitor IA — Identificador de Focos de Lixo
 
 Projeto front-end leve para detectar, mapear e monitorar focos de lixo usando uma pipeline cliente (captura de foto → IA local → armazenamento local). Ideal para demonstrações, provas de conceito e pequenas aplicações locais.
@@ -141,5 +253,6 @@ Se quiser, eu posso também:
 - Gerar um README em inglês;
 - Adicionar um `LICENSE` (MIT) automaticamente;
 - Criar um pequeno script `serve.bat` para abrir o servidor local no Windows (cmd) com um clique.
+
 
 Quer que eu adicione mais alguma seção ou gere o `serve.bat`?
