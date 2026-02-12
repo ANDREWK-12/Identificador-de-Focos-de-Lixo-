@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Denúncia - EcoMonitor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-inner">
+            <div class="logo"><span>♻️ Clean City IA</span><div class="logo-sub">Identificador de focos de lixo com IA</div></div>
+            <nav>
+                <a href="index.html">Painel</a>
+                <a href="relatorios.html" class="active">Relatórios</a>
+                <a href="denuncia.html" class="btn-denuncia">Nova Denúncia</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h2>Nova Denúncia</h2>
+            <div class="hero-banner" style="margin-bottom:14px;">
+                <div class="ai-chip">IA</div>
+                <div class="hero-text"><b>Identificador de Focos de Lixo</b> Use o aplicativo para capturar imagens; nossa IA ajuda a identificar pontos críticos e registrar a denúncia.</div>
+            </div>
+            <div class="upload-box" onclick="document.getElementById('inputFoto').click()">
+                <input type="file" id="inputFoto" accept="image/*" capture="environment">
+                <span class="upload-label">📷 Clique para tirar foto ou selecionar</span>
+            </div>
+
+            <canvas id="canvas-preview"></canvas>
+''
+            <div class="campo-adicional">
+                <label>Data e Hora da Foto:</label>
+                <input type="datetime-local" id="hora-foto" class="input-estilizado">
+            </div>
+
+            <div class="campo-adicional">
+                <label>Marque o local no mapa:</label>
+                <div id="mapa-selecao"></div>
+            </div>
+
+            <div class="campo-adicional">
+                <label>Bairro detectado:</label>
+                <div style="display:flex; gap:12px; align-items:center;">
+                    <div id="texto-bairro-atual" class="info-bairro">Bairro atual: <b>Detectando...</b></div>
+                    <div id="reverse-spinner" style="display:none; color: rgba(10,51,35,0.7); font-size:0.9rem;">Buscando bairro...</div>
+                    <button id="btn-clear-cache" style="display:none; margin-left:6px; padding:6px 8px; border-radius:6px; border:none; background:#e67e22; color:white; cursor:pointer;">Limpar cache</button>
+                </div>
+            </div>
+
+            <button id="btn-analisar" onclick="analisarComIA()">Analisar com IA</button>
+
+            <div id="resultado-ia" class="resultado-box" style="display: none;">
+                <div id="texto-resultado"></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="auth.js"></script>
+    <script src="denuncia.js"></script>
+</body>
+</html>

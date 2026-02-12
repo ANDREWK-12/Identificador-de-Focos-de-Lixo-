@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel EcoMonitor - IA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-inner">
+            <div class="logo"><span>♻️ Clean City IA</span><div class="logo-sub">Identificador de focos de lixo com IA</div></div>
+            <nav>
+                <a href="index.html">Painel</a>
+                <a href="relatorios.html" class="active">Relatórios</a>
+                <a href="denuncia.html" class="btn-denuncia">Nova Denúncia</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h1>Monitoramento de Resíduos (Belém/Ananindeua)</h1>
+        <div class="hero-banner">
+            <div class="ai-chip">IA</div>
+            <div class="hero-text"><b>Identificador de Focos de Lixo</b> Sistema que usa inteligência artificial para detectar e mapear focos de resíduos na cidade.</div>
+        </div>
+        <div id="mapa-residuos"></div>
+
+        <div class="card" style="margin-top:18px;">
+            <h3>Focos Não Resolvidos (Feed)</h3>
+            <div id="grid-fotos" class="feed-grid"></div>
+        </div>
+
+        <!-- visualização inline no feed (sem modal) -->
+
+        <div class="stats-container">
+            <div class="card">
+                <h3>Total de Focos</h3>
+                <p id="txt-total">0</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="auth.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
