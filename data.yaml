@@ -1,0 +1,19 @@
+# 1. CAMINHO ABSOLUTO DO DATASET
+path: E:\Aulas\projetos\Lixo.v3i.yolov8
+
+# 2. CAMINHOS RELATIVOS AO 'PATH':
+train: train/images
+val: valid/images
+test: test/images
+
+# 3. Configuração das Classes
+nc: 2
+names: ['lixo', 'foco de lixo']
+
+# 4. Informações de licença e URL
+roboflow:
+  workspace: detecta-u6tcv
+  project: lixo-u6byu/dataset/7
+  version: 7
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/detecta-u6tcv/lixo-u6byu/dataset/7
